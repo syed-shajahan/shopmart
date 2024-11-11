@@ -30,7 +30,7 @@ export const SearchBar = () => {
             type="text"
             value={keywords}
             onChange={(e) => setKeywords(e.target.value)}
-            placeholder="Search articles..."
+            placeholder="Search Products..."
             className="w-full rounded-[25px] px-6 py-4 text-sm border  outline-none bg-gray-50 dark:bg-[#000] focus:border-gray-500"
           />
           <button

@@ -1,34 +1,15 @@
-'use client';
-
+import { Product } from '@/components/home';
+import { searchApi } from '@/utils/api';
 import Image from 'next/image';
-import React, { FC, useState } from 'react';
+import React from 'react';
 
-// Define the types for product data
-export interface Product {
-  id: number;
-  title: string;
-  description: string;
-  price: number;
-  thumbnail: string;
-  qty?: number;
-}
-
-interface IHomeProps {
-  data: Product[];
-}
-
-const Homepage: FC<IHomeProps> = ({ data }) => {
-  const [cart, setCart] = useState<Product[]>([]);
-
-  console.log(cart, 'cartitmes');
-
-  const addToCart = (product: Product) => {
-    setCart((prevCart) => [...prevCart, product]);
-  };
+const page = async ({ searchParams }: { searchParams: { [key: string]: string } }) => {
+  const data = await searchApi(searchParams.q);
+  console.log(data);
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 p-6">
-      {data?.map((product) => (
+      {data?.map((product: Product) => (
         <div
           key={product.id}
           className="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-lg hover:shadow-2xl transition-shadow ease-in-out"
@@ -43,16 +24,10 @@ const Homepage: FC<IHomeProps> = ({ data }) => {
           <h3 className="text-lg font-semibold text-gray-800 dark:text-white mb-2">{product.title}</h3>
           <p className="text-sm text-gray-600 dark:text-gray-300 mb-4">{product.description}</p>
           <p className="text-xl font-bold text-gray-900 dark:text-gray-100 mb-4">${product.price}</p>
-          <button
-            onClick={() => addToCart(product)}
-            className="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition duration-300"
-          >
-            Add to Cart
-          </button>
         </div>
       ))}
     </div>
   );
 };
 
-export default Homepage;
+export default page;
