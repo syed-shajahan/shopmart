@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
+import { Lato } from "next/font/google";
 import "./globals.css";
+import Header from "@/components/home/Header";
+import { ThemeProvider } from "next-themes";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -11,6 +14,12 @@ const geistMono = localFont({
   src: "./fonts/GeistMonoVF.woff",
   variable: "--font-geist-mono",
   weight: "100 900",
+});
+
+const lato = Lato({
+  subsets: ["latin"],
+  variable: "--font-lato",
+  weight: ["400", "700"],
 });
 
 export const metadata: Metadata = {
@@ -26,9 +35,20 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} ${lato.variable} antialiased`}
       >
-        {children}
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="dark"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <Header />
+
+          <div className=" flex items-start container px-5 mx-auto">
+            <div className="w-full">{children}</div>
+          </div>
+        </ThemeProvider>
       </body>
     </html>
   );
