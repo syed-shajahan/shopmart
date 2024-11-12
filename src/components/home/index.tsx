@@ -22,15 +22,15 @@ interface IHomeProps {
 const Homepage: FC<IHomeProps> = ({ data }) => {
   const [cart, setCart] = useState<Product[]>([]);
 
-  console.log(cart, 'cartitmes');
+  // console.log(cart, 'cartitmes');
   const dispatch = useDispatch<AppDispatch>();
 
   const addToCart = (product: Product) => {
-    setCart((prevCart) => [...prevCart, product]);
-
-    dispatch(addCart({...product, qty:1}));  
+    setCart((prevCart) => [...prevCart, { ...product, qty: 1 }]);
+    dispatch(addCart({ ...product, qty: 1 }));
   };
 
+  console.log(cart, 'caty');
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 p-6">
       {data?.map((product) => (
