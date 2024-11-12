@@ -1,7 +1,9 @@
 'use client';
-
+import { addCart } from '@/store/slices/cartSlice';
+import { AppDispatch } from '@/store/store';
 import Image from 'next/image';
 import React, { FC, useState } from 'react';
+import { useDispatch } from 'react-redux';
 
 // Define the types for product data
 export interface Product {
@@ -21,9 +23,12 @@ const Homepage: FC<IHomeProps> = ({ data }) => {
   const [cart, setCart] = useState<Product[]>([]);
 
   console.log(cart, 'cartitmes');
+  const dispatch = useDispatch<AppDispatch>();
 
   const addToCart = (product: Product) => {
     setCart((prevCart) => [...prevCart, product]);
+
+    dispatch(addCart({...product, qty:1}));  
   };
 
   return (
