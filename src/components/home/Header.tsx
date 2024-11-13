@@ -22,12 +22,15 @@ const Header: FC = () => {
           <div className="ms-2">
             <ModeToggle />
           </div>
-          <div className="ms-2 relative">
+          <Link href="/cart" className="ms-2 relative">
             <FaShoppingCart />
-            <span className="bg-[#e22a48] text-[#fff] p-2 w-4 h-4 rounded-[50px] text-[12px] flex items-center justify-center absolute top-[-10px] right-[-10px]">
-              {cartItemCount.length > 0 && cartItemCount.length}
-            </span>
-          </div>
+
+            {cartItemCount.length > 0 && (
+              <span className="bg-[#e22a48] text-[#fff] p-2 w-4 h-4 rounded-[50px] text-[12px] flex items-center justify-center absolute top-[-10px] right-[-10px]">
+                {cartItemCount.length}
+              </span>
+            )}
+          </Link>
         </div>
       </div>
     </nav>
