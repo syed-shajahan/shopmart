@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export interface CartItem {
   id: number;
@@ -19,15 +19,40 @@ const initialState: ICartStateProps = {
 };
 
 const CartSlice = createSlice({
-  name: 'cart',
+  name: "cart",
   initialState,
   reducers: {
     addCart: (state, action: PayloadAction<CartItem>) => {
-      state.items.push(action.payload);
+      const ifItemExist = state.items.find(
+        (item) => item.id === action.payload.id
+      );
+
+      if (!ifItemExist) {
+        state.items.push(action.payload);
+        state.items.reverse();
+      }
+    },
+    deleteCartItems: (state, action: PayloadAction<number>) => {
+      state.items = state.items.filter((item) => item.id !== action.payload);
+    },
+    incrementQty: (state, action) => {
+      state.items = state.items.map((item) =>
+        item.id === action.payload
+          ? { ...item, qty: (item.qty || 0) + 1 }
+          : item
+      );
+    },
+    decreaseQty: (state, action) => {
+      state.items = state.items.map((item) =>
+        item.id === action.payload
+          ? { ...item, qty: (item.qty || 0) - 1 }
+          : item
+      );
     },
   },
 });
 
-export const { addCart } = CartSlice.actions;
+export const { addCart, deleteCartItems, incrementQty, decreaseQty } =
+  CartSlice.actions;
 
 export default CartSlice.reducer;
