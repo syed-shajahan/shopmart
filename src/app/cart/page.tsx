@@ -16,14 +16,24 @@ import {
 const CartPage = () => {
   const cartItems = useSelector((state: RootState) => state.cart.items);
 
+  const totalQty =cartItems.reduce((acc, item) => acc + (item.qty ?? 0)*item.price , 0 )
+
   const dispatch = useDispatch();
 
   return (
     <div className="mt-10">
+     
+
+      <div className="sticky top-[90px] bg-[#020817] z-10 backdrop-blur-[5px]">
       <h3 className="mb-3">
         Total Items Added:{" "}
         <span className="font-semibold">{cartItems.length}</span>{" "}
       </h3>
+
+      <h1 className="mb-3">
+        Total Price <span className="font-semibold text-[30px] text-green-300">{totalQty.toFixed(2)} $</span> 
+      </h1>
+      </div>
 
       {cartItems.map((data) => {
         return (
@@ -45,11 +55,11 @@ const CartPage = () => {
                     </p>
                     <p className="text-[12px]">
                       In stock:{" "}
-                      <span className="text-green-300 text-[14px]">
+                      <span className="text-yellow-400 text-[14px]">
                         {data.stock}
                       </span>
                     </p>
-                    <h5 className="text-[16px]  font-bold">{data.qty}</h5>
+                    <p className="text-[16px]  font-bold">Quantity: {data.qty}</p>
                   </div>
                 </div>
 

@@ -42,6 +42,7 @@ const CartSlice = createSlice({
           : item
       );
     },
+
     decreaseQty: (state, action) => {
       state.items = state.items.map((item) =>
         item.id === action.payload
